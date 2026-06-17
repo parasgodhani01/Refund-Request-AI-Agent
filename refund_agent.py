@@ -1,34 +1,3 @@
-"""
-refund_agent.py
-───────────────
-LangGraph-powered Refund Request AI Agent
-
-Graph Flow:
-  START
-    │
-    ▼
-  extract_info          ← Parse order ID & reason from user message
-    │
-    ▼
-  validate_order        ← Look up order in database
-    │
-    ├─ not_found ──────► respond (order not found)
-    │
-    ▼
-  retrieve_policy       ← FAISS similarity search for relevant policies
-    │
-    ▼
-  evaluate_eligibility  ← LLM decides: APPROVE / DENY / ESCALATE / PARTIAL
-    │
-    ├─ escalate ───────► escalate_handler
-    │
-    ▼
-  generate_response     ← Draft final customer-facing response
-    │
-    ▼
-  END
-"""
-
 from __future__ import annotations
 
 import json
@@ -44,9 +13,6 @@ from langgraph.graph.message import add_messages
 from knowledge_base import get_retriever
 from order_db import get_days_since_purchase, get_order
 
-# ──────────────────────────────────────────────
-# State Definition
-# ──────────────────────────────────────────────
 
 
 class RefundState(TypedDict):
@@ -74,10 +40,6 @@ class RefundState(TypedDict):
     final_response: str | None
     requires_escalation: bool
 
-
-# ──────────────────────────────────────────────
-# Node Implementations
-# ──────────────────────────────────────────────
 
 
 def build_llm(api_key: str | None = None) -> ChatOpenAI:
