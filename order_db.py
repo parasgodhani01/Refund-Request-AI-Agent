@@ -10,9 +10,6 @@ from __future__ import annotations
 from datetime import date, timedelta
 from typing import Optional
 
-# ──────────────────────────────────────────────
-# Mock Orders  (order_id → order details)
-# ──────────────────────────────────────────────
 
 today = date.today()
 
