@@ -1,4 +1,3 @@
-// Interactive visual demo — paste into claude.ai artifacts or save as demo.jsx
 import { useState, useEffect } from "react";
 
 const ORDERS = {
