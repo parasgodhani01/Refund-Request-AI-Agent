@@ -234,7 +234,6 @@ Key points to include:
 
 # ── Node 6: Generate Response ─────────────────
 
-
 def generate_response(state: RefundState) -> RefundState:
     """Draft the final customer-facing response."""
     llm = build_llm()
@@ -282,12 +281,6 @@ Guidelines:
         "messages": state["messages"] + [AIMessage(content=response)],
     }
 
-
-# ──────────────────────────────────────────────
-# Routing Functions
-# ──────────────────────────────────────────────
-
-
 def route_after_validation(state: RefundState) -> str:
     if state.get("decision") == "NOT_FOUND":
         return "generate_response"
@@ -298,11 +291,6 @@ def route_after_evaluation(state: RefundState) -> str:
     if state.get("decision") == "ESCALATE":
         return "escalate_handler"
     return "generate_response"
-
-
-# ──────────────────────────────────────────────
-# Build the LangGraph
-# ──────────────────────────────────────────────
 
 
 def build_refund_graph() -> StateGraph:
@@ -340,12 +328,6 @@ def build_refund_graph() -> StateGraph:
     graph.add_edge("generate_response", END)
 
     return graph.compile()
-
-
-# ──────────────────────────────────────────────
-# Public API
-# ──────────────────────────────────────────────
-
 
 def process_refund_request(user_message: str) -> dict:
     """
