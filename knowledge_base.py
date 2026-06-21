@@ -15,10 +15,6 @@ from langchain_community.vectorstores import FAISS
 from langchain_core.documents import Document
 from langchain_openai import OpenAIEmbeddings
 
-# ──────────────────────────────────────────────
-# 1.  Refund Policy Documents
-# ──────────────────────────────────────────────
-
 POLICY_DOCUMENTS: List[dict] = [
     # ── General Return Policy ─────────────────
     {
@@ -126,9 +122,6 @@ POLICY_DOCUMENTS: List[dict] = [
     },
 ]
 
-# ──────────────────────────────────────────────
-# 2.  Build / Load FAISS Store
-# ──────────────────────────────────────────────
 
 FAISS_INDEX_PATH = "faiss_refund_index"
 
@@ -148,7 +141,7 @@ def build_knowledge_base(openai_api_key: str | None = None) -> FAISS:
 
     vector_store = FAISS.from_documents(documents, embeddings)
     vector_store.save_local(FAISS_INDEX_PATH)
-    print(f"✅  FAISS index built with {len(documents)} policy documents.")
+    print(f"FAISS index built with {len(documents)} policy documents.")
     return vector_store
 
 
@@ -161,7 +154,7 @@ def load_knowledge_base(openai_api_key: str | None = None) -> FAISS:
         vector_store = FAISS.load_local(
             FAISS_INDEX_PATH, embeddings, allow_dangerous_deserialization=True
         )
-        print("✅  FAISS index loaded from disk.")
+        print("FAISS index loaded from disk.")
     else:
         vector_store = build_knowledge_base(api_key)
 
